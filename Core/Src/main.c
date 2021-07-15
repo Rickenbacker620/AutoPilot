@@ -51,7 +51,7 @@
 
 /* USER CODE BEGIN PV */
 uint8_t Flag_Left, Flag_Right, Flag_Direction = 0, Flag_Way,
-                               Flag_Next; //蓝牙遥控相关的变�?
+                               Flag_Next;
 uint8_t operationMode;
 uint8_t Flag_Stop = 1, Flag_Show;
 int Encoder_Left, Encoder_Right;
@@ -129,27 +129,13 @@ int main(void)
 
   delay_init();
 
-  LL_TIM_EnableAllOutputs(TIM8);
-  LL_TIM_EnableCounter(TIM8);
-  LL_TIM_CC_EnableChannel(TIM8, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2 | LL_TIM_CHANNEL_CH3 | LL_TIM_CHANNEL_CH4);
-
-  LL_TIM_EnableAllOutputs(TIM1);
-  LL_TIM_EnableCounter(TIM1);
-  LL_TIM_CC_EnableChannel(TIM1, LL_TIM_CHANNEL_CH1);
-
-  LL_TIM_EnableCounter(TIM2);
-  LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
-
-  LL_TIM_EnableCounter(TIM3);
-  LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH1 | LL_TIM_CHANNEL_CH2);
-
   OLED_Init();
 
   Flag_Way = 1;
   Flag_Show = 0;
   Flag_Stop = 1;
 
-  delay_ms(1000);
+  delay_ms(500);
 
   PS2_SetInit();
 
@@ -158,6 +144,7 @@ int main(void)
 
   LL_TIM_EnableCounter(TIM6);
   LL_TIM_EnableIT_UPDATE(TIM6);
+
   Accel_Key = 4;
 
   /* USER CODE END 2 */
@@ -166,29 +153,19 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // PS2_KEY = PS2_DataKey();
+    PS2_KEY = PS2_DataKey();
 
-    // PS2_LX = PS2_AnologData(PSS_LX); // PS2????
-    // PS2_LY = PS2_AnologData(PSS_LY);
-    // PS2_RX = PS2_AnologData(PSS_RX);
-    // PS2_RY = PS2_AnologData(PSS_RY);
+    PS2_LX = PS2_AnologData(PSS_LX);
+    PS2_LY = PS2_AnologData(PSS_LY);
+    PS2_RX = PS2_AnologData(PSS_RX);
+    PS2_RY = PS2_AnologData(PSS_RY);
 
-    // // printf("TIM2 : %d, TIM3 :  %d\n", TIM2->CNT, TIM3->CNT);
-    // printf("TIM8: %d,  %d, %d, %d\n", TIM8->CCR1, TIM8->CCR2, TIM8->CCR3, TIM8->CCR4);
-    // // printf("%d %d %d %d \n", TIM8->CCR1, TIM8->CCR2, TIM8->CCR3, TIM8->CCR4);
-    // PS2_RX = PS2_AnologData(PSS_RX);
-    // // PS2_RY = PS2_AnologData(PSS_RY);
-    // PS2_LY = 200;
-    // printf("%d %d %d %d \n", TIM8->CCR1, TIM8->CCR2, TIM8->CCR3, TIM8->CCR4);
-    // printf("LEFT TIM2: %d, RIGHT TIM3:  %d\n", TIM2->CNT, TIM3->CNT);
-    // printf("TIM2 : %d, TIM3 :  %d\n", TIM2->CNT, TIM3->CNT);
-
-    oled_show(); //?????
+    oled_show();
     delay_flag = 1;
 
     delay_50 = 0;
     while (delay_flag)
-      ; //?????????50ms????
+      ;
 
     /* USER CODE END WHILE */
 
@@ -204,33 +181,30 @@ int main(void)
 void SystemClock_Config(void)
 {
   LL_FLASH_SetLatency(LL_FLASH_LATENCY_2);
-  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_2)
+  while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_2)
   {
   }
   LL_RCC_HSE_Enable();
 
-   /* Wait till HSE is ready */
-  while(LL_RCC_HSE_IsReady() != 1)
+  /* Wait till HSE is ready */
+  while (LL_RCC_HSE_IsReady() != 1)
   {
-
   }
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
   LL_RCC_PLL_Enable();
 
-   /* Wait till PLL is ready */
-  while(LL_RCC_PLL_IsReady() != 1)
+  /* Wait till PLL is ready */
+  while (LL_RCC_PLL_IsReady() != 1)
   {
-
   }
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_2);
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
 
-   /* Wait till System clock is ready */
-  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
+  /* Wait till System clock is ready */
+  while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
   {
-
   }
   LL_Init1msTick(72000000);
   LL_SetSystemCoreClock(72000000);
@@ -255,7 +229,7 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

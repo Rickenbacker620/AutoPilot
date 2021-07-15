@@ -10,7 +10,7 @@ void Kinematic_Analysis(float velocity, float angle);
 int EXTI15_10_IRQHandler(void);
 void Set_Pwm(int motor_a, int motor_b, int servo);
 void Key(void);
-void Xianfu_Pwm(int amplitude);
+void Limit_Pwm(int amplitude);
 void Xianfu_Velocity(int amplitude_A, int amplitude_B);
 uint8_t Turn_Off(int voltage);
 int myabs(int a);

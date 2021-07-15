@@ -64,73 +64,22 @@ void Core_Control(void) // TIM6中断
         }
         else if (Flag_Target == 0)
         {
+
             Encoder_Right = Read_Encoder(3); //===读取编码器的值
             Encoder_Left = Read_Encoder(2);  //===读取编码器的值
+            Get_RC();                        //===接收控制指令
 
-            Target_Left = 10;
-            Target_Right = -10;
+            Kinematic_Analysis(Velocity, -Angle); //小车运动学分析
 
+            // Show_KinematicInfo();
             Motor_Left = Incremental_PI_Left(Encoder_Left, Target_Left);
             Motor_Right = Incremental_PI_Right(Encoder_Right, Target_Right);
-
-            Xianfu_Pwm(6900); //===PWM限幅
-
-            // printf("Motor L: %d Motor R: %d\n", Motor_Left, Motor_Right);
-
-            Motor_Left = -1302;
-            Motor_Right = 1302;
-
+            Limit_Pwm(6900);                         //===PWM限幅
             Set_Pwm(Motor_Left, Motor_Right, Servo); //===赋值给PWM寄存器
-            printf("Motor_L: %d, Motor_R: %d    ", Motor_Left, Motor_Right);
-            printf("%d, %d, %d, %d\n", PWMA1, PWMA2, PWMB1, PWMB2);
-
-            // Encoder_Right = Read_Encoder(3); //===读取编码器的值
-            // Encoder_Left = Read_Encoder(2);  //===读取编码器的值
-            // Get_RC();                        //===接收控制指令
-
-            // Kinematic_Analysis(Velocity, -Angle); //小车运动学分析
-
-            // // Show_KinematicInfo();
-            // Motor_Left = Incremental_PI_Left(Encoder_Left, Target_Left);
-            // Motor_Right = Incremental_PI_Right(Encoder_Right, Target_Right);
-            // Xianfu_Pwm(6900);                        //===PWM限幅
-            // Set_Pwm(Motor_Left, Motor_Right, Servo); //===赋值给PWM寄存器
-            // Show_MotorInfo();
+            Show_MotorInfo();
         }
     }
 }
-
-// void CoreControl()
-// {
-//     Flag_Target = !Flag_Target; //分频标志位
-//     if (delay_flag == 1)
-//     {
-//         printf("%d", delay_50);
-//         if (++delay_50 == 3)
-//         {
-//             delay_50 = 0, delay_flag = 0; //给主函数提供50ms的精准延时
-//         }
-//     }
-//     if (Flag_Target == 1)
-//     {
-//         Key(); //扫描按键变化
-//     }
-//     else if (Flag_Target == 0)
-//     {
-//         Encoder_Right = Read_Encoder(3); //===读取编码器的值
-//         Encoder_Left = Read_Encoder(2);  //===读取编码器的值
-//         Get_RC();                        //===接收控制指令
-
-//         Kinematic_Analysis(Velocity, -Angle); //小车运动学分析
-
-//         // Show_KinematicInfo();
-//         Motor_Left = Incremental_PI_Left(Encoder_Left, Target_Left);
-//         Motor_Right = Incremental_PI_Right(Encoder_Right, Target_Right);
-//         Xianfu_Pwm(6900);                        //===PWM限幅
-//         Set_Pwm(Motor_Left, Motor_Right, Servo); //===赋值给PWM寄存器
-//         // Show_MotorInfo();
-//     }
-// }
 
 /**************************************************************************
 函数功能：赋值给PWM寄存器
@@ -155,7 +104,7 @@ void Set_Pwm(int motor_a, int motor_b, int servo)
 入口参数：幅值
 返回  值：无
 **************************************************************************/
-void Xianfu_Pwm(int amplitude)
+void Limit_Pwm(int amplitude)
 {
     if (Motor_Left < -amplitude)
         Motor_Left = -amplitude; //限制最小值
