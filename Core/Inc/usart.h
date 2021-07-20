@@ -21,27 +21,57 @@
 #define __USART_H__
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-/* USER CODE BEGIN Includes */
+  /* USER CODE BEGIN Includes */
 
-/* USER CODE END Includes */
+  /* USER CODE END Includes */
 
-/* USER CODE BEGIN Private defines */
+  /* USER CODE BEGIN Private defines */
 
-/* USER CODE END Private defines */
+  // union carInfo
+  // {
+  //   uint8_t raw[49];
+  //   struct data
+  //   {
+  //     uint16_t header;
+  //     uint8_t len[2];
+  //     int re_Encoder_Left;
+  //     int re_Encoder_Right;
+  //     int Voltage;
+  //     int accelX;
+  //     int accelY;
+  //     int accelZ;
+  //     int gyroX;
+  //     int gyroY;
+  //     int gyroZ;
+  //     int magX;
+  //     int magY;
+  //     int magZ;
+  //     int Distance_A;
+  //     int Distance_B;
+  //     int Distance_C;
+  //     int Distance_D;
+  //   };
+  // } aa;
 
-void MX_USART1_UART_Init(void);
+  /* USER CODE END Private defines */
 
-/* USER CODE BEGIN Prototypes */
+  void MX_USART1_UART_Init(void);
+
+  /* USER CODE BEGIN Prototypes */
 
   int Receive_Signal(void);
 
-/* USER CODE END Prototypes */
+  void usart1_send(uint8_t data);
+  void Send_Signal(void);
+
+  /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }

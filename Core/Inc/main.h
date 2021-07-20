@@ -24,10 +24,11 @@
 #define __MAIN_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-/* Includes ------------------------------------------------------------------*/
+  /* Includes ------------------------------------------------------------------*/
 
 #include "stm32f1xx_ll_rcc.h"
 #include "stm32f1xx_ll_bus.h"
@@ -54,10 +55,10 @@ extern "C" {
 #include <string.h>
 #include <math.h>
 
-/* USER CODE END Includes */
+  /* USER CODE END Includes */
 
-/* Exported types ------------------------------------------------------------*/
-/* USER CODE BEGIN ET */
+  /* Exported types ------------------------------------------------------------*/
+  /* USER CODE BEGIN ET */
 
 #define JTAG_SWD_DISABLE 0X02
 #define SWD_ENABLE 0X01
@@ -72,26 +73,26 @@ extern "C" {
 #define PWMB1 TIM8->CCR4
 #define PWMB2 TIM8->CCR3
 
-  extern uint8_t Flag_Left, Flag_Right, Flag_Direction, Flag_Way, Flag_Next, operationMode; //蓝牙遥控相关的变�?
-  extern uint8_t Flag_Stop, Flag_Show;                                                      //停止标志位和 显示标志�? 默认停止 显示打开
-  extern int Encoder_Left, Encoder_Right;                                                   //编码器的脉冲计数
-  extern long int Motor_Left, Motor_Right;                                                  //电机PWM变量
-  extern long int Target_Left, Target_Right;                                                //电机目标�?
-  extern int Voltage;                                                                       //电池电压采样相关的变�?
-  extern uint8_t delay_50, delay_flag;                                                      //延时相关变量
-  extern uint8_t Run_Flag;                                                                  //速度或�?�位置模式指示变�?
+  extern uint8_t Flag_Left, Flag_Right, Flag_Direction, Flag_Way, Flag_Next, operationMode;
+  extern uint8_t Flag_Stop, Flag_Show;
+  extern int Encoder_Left, Encoder_Right;
+  extern long int Motor_Left, Motor_Right;
+  extern long int Target_Left, Target_Right;
+  extern int Voltage;
+  extern uint8_t delay_50, delay_flag;
+  extern uint8_t Run_Flag;
   extern float Velocity, Angle, Servo;
-  extern uint8_t rxbuf[8], Urxbuf[8], CAN_ON_Flag, Usart_ON_Flag, Usart_Flag, PID_Send; // CAN和串口控制相关变�?
-  extern uint8_t txbuf[8], txbuf2[8];                                                   // CAN发�?�相关变�?
-  extern float Pitch, Roll, Yaw, Gryo_Z;                                                //三轴角度 Z轴陀螺仪和XYZ轴目标�?�度
-  extern float Position_KP, Position_KI, Position_KD;                                   //位置控制PID参数
-  extern float Velocity_KP, Velocity_KI;                                                //速度控制PID参数
-  extern int RC_Velocity;                                                               //设置遥控的�?�度和位置�??
-  extern int PS2_LX, PS2_LY, PS2_RX, PS2_RY, PS2_KEY, Accel_Key;                        // PS2相关变量
-  extern uint16_t CCD_Zhongzhi, CCD_Yuzhi, ADV[128];                                    // CCD相关变量
-  extern int Sensor_Left, Sensor_Middle, Sensor_Right, Sensor;                          //电磁巡线相关
+  extern uint8_t rxbuf[8], Urxbuf[8], CAN_ON_Flag, Usart_ON_Flag, Usart_Flag, PID_Send;
+  extern uint8_t txbuf[8], txbuf2[8];
+  extern float Pitch, Roll, Yaw, Gryo_Z;
+  extern float Position_KP, Position_KI, Position_KD;
+  extern float Velocity_KP, Velocity_KI;
+  extern int RC_Velocity;
+  extern int PS2_LX, PS2_LY, PS2_RX, PS2_RY, PS2_KEY, Accel_Key;
+  extern uint16_t CCD_Zhongzhi, CCD_Yuzhi, ADV[128];
+  extern int Sensor_Left, Sensor_Middle, Sensor_Right, Sensor;
   extern int Remoter_Ch1, Remoter_Ch2, Remoter_Ch3, Remoter_Ch4;
-  extern int Distance_A, Distance_B, Distance_C, Distance_D; //超声波相关变�?
+  extern int Distance_A, Distance_B, Distance_C, Distance_D;
   extern short gyroX, gyroY, gyroZ;
   extern short accelX, accelY, accelZ;
   extern short magX, magY, magZ;
@@ -99,34 +100,34 @@ extern "C" {
 
   extern int testint;
 
-/* USER CODE END ET */
+  /* USER CODE END ET */
 
-/* Exported constants --------------------------------------------------------*/
-/* USER CODE BEGIN EC */
+  /* Exported constants --------------------------------------------------------*/
+  /* USER CODE BEGIN EC */
 
-/* USER CODE END EC */
+  /* USER CODE END EC */
 
-/* Exported macro ------------------------------------------------------------*/
-/* USER CODE BEGIN EM */
+  /* Exported macro ------------------------------------------------------------*/
+  /* USER CODE BEGIN EM */
 
-/* USER CODE END EM */
+  /* USER CODE END EM */
 
-/* Exported functions prototypes ---------------------------------------------*/
-void Error_Handler(void);
+  /* Exported functions prototypes ---------------------------------------------*/
+  void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define SERVO_PERIOD 10000-1
-#define SERVO_PRESCALER 72-1
-#define MOTOR_PERIOD 7200-1
-#define MOTOR_PRESCALER 1-1
-#define ENCODER_PERIOD 65536-1
-#define ENCODER_PRESCALER 1-1
-#define TIM6_PERIOD 100-1
-#define TIM6_PRESCALER 7200-1
+#define SERVO_PERIOD 10000 - 1
+#define SERVO_PRESCALER 72 - 1
+#define MOTOR_PERIOD 7200 - 1
+#define MOTOR_PRESCALER 1 - 1
+#define ENCODER_PERIOD 65536 - 1
+#define ENCODER_PRESCALER 1 - 1
+#define TIM6_PERIOD 100 - 1
+#define TIM6_PRESCALER 7200 - 1
 #define OLED_SCL_Pin LL_GPIO_PIN_13
 #define OLED_SCL_GPIO_Port GPIOC
 #define OLED_SDA_Pin LL_GPIO_PIN_14
@@ -166,18 +167,18 @@ void Error_Handler(void);
 #define LEFT_MOTOR_ENB_Pin LL_GPIO_PIN_3
 #define LEFT_MOTOR_ENB_GPIO_Port GPIOB
 #ifndef NVIC_PRIORITYGROUP_0
-#define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
-                                                                 4 bits for subpriority */
-#define NVIC_PRIORITYGROUP_1         ((uint32_t)0x00000006) /*!< 1 bit  for pre-emption priority,
-                                                                 3 bits for subpriority */
-#define NVIC_PRIORITYGROUP_2         ((uint32_t)0x00000005) /*!< 2 bits for pre-emption priority,
-                                                                 2 bits for subpriority */
-#define NVIC_PRIORITYGROUP_3         ((uint32_t)0x00000004) /*!< 3 bits for pre-emption priority,
-                                                                 1 bit  for subpriority */
-#define NVIC_PRIORITYGROUP_4         ((uint32_t)0x00000003) /*!< 4 bits for pre-emption priority,
-                                                                 0 bit  for subpriority */
+#define NVIC_PRIORITYGROUP_0 ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority, \
+                                                         4 bits for subpriority */
+#define NVIC_PRIORITYGROUP_1 ((uint32_t)0x00000006) /*!< 1 bit  for pre-emption priority, \
+                                                         3 bits for subpriority */
+#define NVIC_PRIORITYGROUP_2 ((uint32_t)0x00000005) /*!< 2 bits for pre-emption priority, \
+                                                         2 bits for subpriority */
+#define NVIC_PRIORITYGROUP_3 ((uint32_t)0x00000004) /*!< 3 bits for pre-emption priority, \
+                                                         1 bit  for subpriority */
+#define NVIC_PRIORITYGROUP_4 ((uint32_t)0x00000003) /*!< 4 bits for pre-emption priority, \
+                                                         0 bit  for subpriority */
 #endif
-/* USER CODE BEGIN Private defines */
+  /* USER CODE BEGIN Private defines */
 
 #define BITBAND(addr, bitnum) ((addr & 0xF0000000) + 0x2000000 + ((addr & 0xFFFFF) << 5) + (bitnum << 2))
 #define MEM_ADDR(addr) *((volatile unsigned long *)(addr))
@@ -205,7 +206,7 @@ void Error_Handler(void);
 #define PDout(n) BIT_ADDR(GPIOD_ODR_Addr, n)
 #define PDin(n) BIT_ADDR(GPIOD_IDR_Addr, n)
 
-/* USER CODE END Private defines */
+  /* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

@@ -76,7 +76,7 @@ void Core_Control(void) // TIM6中断
             Motor_Right = Incremental_PI_Right(Encoder_Right, Target_Right);
             Limit_Pwm(6900);                         //===PWM限幅
             Set_Pwm(Motor_Left, Motor_Right, Servo); //===赋值给PWM寄存器
-            Show_MotorInfo();
+            // Show_MotorInfo();
         }
     }
 }
