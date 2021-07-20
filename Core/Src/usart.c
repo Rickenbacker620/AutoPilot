@@ -55,6 +55,10 @@ void MX_USART1_UART_Init(void)
   GPIO_InitStruct.Mode = LL_GPIO_MODE_FLOATING;
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /* USART1 interrupt Init */
+  NVIC_SetPriority(USART1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 1));
+  NVIC_EnableIRQ(USART1_IRQn);
+
   /* USER CODE BEGIN USART1_Init 1 */
 
   /* USER CODE END USART1_Init 1 */
@@ -70,6 +74,8 @@ void MX_USART1_UART_Init(void)
   LL_USART_Enable(USART1);
   /* USER CODE BEGIN USART1_Init 2 */
 
+  LL_USART_EnableIT_RXNE(USART1);
+
   /* USER CODE END USART1_Init 2 */
 
 }
@@ -82,6 +88,38 @@ int fputc(int ch, FILE *f)
   while (!LL_USART_IsActiveFlag_TXE(USART1))
     ;
   return ch;
+}
+
+int Receive_Signal(void)
+{
+  if (LL_USART_IsActiveFlag_RXNE(USART1))
+  {
+    uint8_t temp;
+    static uint8_t count, last_data, last_last_data, Usart_ON_Count;
+    if (Usart_ON_Flag == 0)
+    {
+      if (++Usart_ON_Count > 10)
+        Usart_ON_Flag = 1;
+    }
+    temp = USART1->DR;
+    if (Usart_Flag == 0)
+    {
+      if (last_data == 0x5a && last_last_data == 0xa5)
+        Usart_Flag = 1, count = 0;
+    }
+    if (Usart_Flag == 1)
+    {
+      Urxbuf[count] = temp;
+      count++;
+      if (count == 8)
+      {
+        Usart_Flag = 0;
+      }
+    }
+    last_last_data = last_data;
+    last_data = temp;
+  }
+  return 0;
 }
 
 /* USER CODE END 1 */

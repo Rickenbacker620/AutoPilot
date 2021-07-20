@@ -39,6 +39,8 @@ void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
+  int Receive_Signal(void);
+
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
