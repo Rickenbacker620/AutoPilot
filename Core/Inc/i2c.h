@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file    usart.h
+  * @file    i2c.h
   * @brief   This file contains all the function prototypes for
-  *          the usart.c file
+  *          the i2c.c file
   ******************************************************************************
   * @attention
   *
@@ -17,65 +17,38 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USART_H__
-#define __USART_H__
+#ifndef __I2C_H__
+#define __I2C_H__
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-/* USER CODE BEGIN Includes */
+  /* USER CODE BEGIN Includes */
 
-/* USER CODE END Includes */
+  /* USER CODE END Includes */
 
-/* USER CODE BEGIN Private defines */
+  /* USER CODE BEGIN Private defines */
 
-  // union carInfo
-  // {
-  //   uint8_t raw[49];
-  //   struct data
-  //   {
-  //     uint16_t header;
-  //     uint8_t len[2];
-  //     int re_Encoder_Left;
-  //     int re_Encoder_Right;
-  //     int Voltage;
-  //     int accelX;
-  //     int accelY;
-  //     int accelZ;
-  //     int gyroX;
-  //     int gyroY;
-  //     int gyroZ;
-  //     int magX;
-  //     int magY;
-  //     int magZ;
-  //     int Distance_A;
-  //     int Distance_B;
-  //     int Distance_C;
-  //     int Distance_D;
-  //   };
-  // } aa;
+  /* USER CODE END Private defines */
 
-/* USER CODE END Private defines */
+  void MX_I2C2_Init(void);
 
-void MX_USART1_UART_Init(void);
+  /* USER CODE BEGIN Prototypes */
 
-/* USER CODE BEGIN Prototypes */
+  uint8_t I2C_Write_Reg(uint8_t slave_addr, uint8_t reg_addr, uint8_t reg_data);
+  uint8_t I2C_Read_Reg(uint8_t slave_addr, uint8_t reg_addr);
 
-  int Receive_Signal(void);
-
-  void usart1_send(uint8_t data);
-  void Send_Signal(void);
-
-/* USER CODE END Prototypes */
+  /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __USART_H__ */
+#endif /* __I2C_H__ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

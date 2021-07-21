@@ -84,7 +84,7 @@ void MX_USART1_UART_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* USART1 interrupt Init */
-  NVIC_SetPriority(USART1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 1));
+  NVIC_SetPriority(USART1_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 1));
   NVIC_EnableIRQ(USART1_IRQn);
 
   /* USER CODE BEGIN USART1_Init 1 */
@@ -105,6 +105,7 @@ void MX_USART1_UART_Init(void)
   LL_USART_EnableIT_RXNE(USART1);
 
   /* USER CODE END USART1_Init 2 */
+
 }
 
 /* USER CODE BEGIN 1 */
@@ -145,58 +146,58 @@ void usart1_send(uint8_t data)
 //   {
 //     Send_rasberry[11 + send_cnt] = ((unsigned char *)&Voltage)[send_cnt];
 //   }
-//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // X 轴加速度计值
+//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // X 轴加速度计�??
 //   {
 //     Send_rasberry[15 + send_cnt] = ((unsigned char *)&accelX)[send_cnt];
 //   }
-//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Y 轴加速度计值
+//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Y 轴加速度计�??
 //   {
 //     Send_rasberry[17 + send_cnt] = ((unsigned char *)&accelY)[send_cnt];
 //   }
-//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Y 轴加速度计值
+//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Y 轴加速度计�??
 //   {
 //     Send_rasberry[19 + send_cnt] = ((unsigned char *)&accelZ)[send_cnt];
 //   }
 //   //send gyro X Y Z
-//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // X 轴角速度值
+//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // X 轴角速度�?
 //   {
 //     Send_rasberry[21 + send_cnt] = ((unsigned char *)&gyroX)[send_cnt];
 //   }
-//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Y 轴角速度值
+//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Y 轴角速度�?
 //   {
 //     Send_rasberry[23 + send_cnt] = ((unsigned char *)&gyroY)[send_cnt];
 //   }
-//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Z 轴角速度值
+//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Z 轴角速度�?
 //   {
 //     Send_rasberry[25 + send_cnt] = ((unsigned char *)&gyroZ)[send_cnt];
 //   }
 //   //send MAG X Y Z
-//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // X 轴磁力计值
+//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // X 轴磁力计�?
 //   {
 //     Send_rasberry[27 + send_cnt] = ((unsigned char *)&magX)[send_cnt];
 //   }
-//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Y 轴磁力计值
+//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Y 轴磁力计�?
 //   {
 //     Send_rasberry[29 + send_cnt] = ((unsigned char *)&magY)[send_cnt];
 //   }
-//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Z 轴磁力计值
+//   for (send_cnt = 0; send_cnt < 2; send_cnt++) // Z 轴磁力计�?
 //   {
 //     Send_rasberry[31 + send_cnt] = ((unsigned char *)&magZ)[send_cnt];
 //   }
 //   //send ultrasonic A B C D
-//   for (send_cnt = 0; send_cnt < 4; send_cnt++) // 超测量距离值 A
+//   for (send_cnt = 0; send_cnt < 4; send_cnt++) // 超测量距离�?? A
 //   {
 //     Send_rasberry[33 + send_cnt] = ((unsigned char *)&Distance_A)[send_cnt];
 //   }
-//   for (send_cnt = 0; send_cnt < 4; send_cnt++) // 超测量距离值 B
+//   for (send_cnt = 0; send_cnt < 4; send_cnt++) // 超测量距离�?? B
 //   {
 //     Send_rasberry[37 + send_cnt] = ((unsigned char *)&Distance_B)[send_cnt];
 //   }
-//   for (send_cnt = 0; send_cnt < 4; send_cnt++) // 超测量距离值 C
+//   for (send_cnt = 0; send_cnt < 4; send_cnt++) // 超测量距离�?? C
 //   {
 //     Send_rasberry[41 + send_cnt] = ((unsigned char *)&Distance_C)[send_cnt];
 //   }
-//   for (send_cnt = 0; send_cnt < 4; send_cnt++) // 超测量距离值 D
+//   for (send_cnt = 0; send_cnt < 4; send_cnt++) // 超测量距离�?? D
 //   {
 //     Send_rasberry[45 + send_cnt] = ((unsigned char *)&Distance_D)[send_cnt];
 //   }

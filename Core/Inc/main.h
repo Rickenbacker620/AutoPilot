@@ -30,6 +30,7 @@ extern "C"
 
   /* Includes ------------------------------------------------------------------*/
 
+#include "stm32f1xx_ll_i2c.h"
 #include "stm32f1xx_ll_rcc.h"
 #include "stm32f1xx_ll_bus.h"
 #include "stm32f1xx_ll_system.h"
@@ -98,7 +99,7 @@ extern "C"
   extern short magX, magY, magZ;
   extern float Tand;
 
-  extern int testint;
+  extern uint8_t testint;
 
   /* USER CODE END ET */
 
@@ -148,6 +149,10 @@ extern "C"
 #define RIGHT_MOTOR_ENA_GPIO_Port GPIOA
 #define RIGHT_MOTOR_ENB_Pin LL_GPIO_PIN_7
 #define RIGHT_MOTOR_ENB_GPIO_Port GPIOA
+#define MPU9250_SCL_Pin LL_GPIO_PIN_10
+#define MPU9250_SCL_GPIO_Port GPIOB
+#define MPU9250_SDA_Pin LL_GPIO_PIN_11
+#define MPU9250_SDA_GPIO_Port GPIOB
 #define LED_Pin LL_GPIO_PIN_13
 #define LED_GPIO_Port GPIOB
 #define KEY_Pin LL_GPIO_PIN_14
@@ -179,6 +184,36 @@ extern "C"
                                                          0 bit  for subpriority */
 #endif
   /* USER CODE BEGIN Private defines */
+
+#define ACCEL_ADDRESS 0xD0
+#define GYRO_ADDRESS 0xD0
+#define MAG_ADDRESS 0x18
+#define SMPLRT_DIV 0X19
+#define CONFIG 0X1A
+#define GYRO_CONFIG 0X1B
+#define ACCEL_CONFIG 0X1C
+#define ACCEL_CONFIG2 0X1D
+
+#define ACCEL_XOUT_H 0X3B
+#define ACCEL_XOUT_L 0X3C
+#define ACCEL_YOUT_H 0X3D
+#define ACCEL_YOUT_L 0X3E
+#define ACCEL_ZOUT_H 0X3F
+#define ACCEL_ZOUT_L 0X40
+
+#define GYRO_XOUT_H 0X43
+#define GYRO_XOUT_L 0X44
+#define GYRO_YOUT_H 0X45
+#define GYRO_YOUT_L 0X46
+#define GYRO_ZOUT_H 0X47
+#define GYRO_ZOUT_L 0X48
+
+#define MAG_XOUT_L 0x03
+#define MAG_XOUT_H 0x04
+#define MAG_YOUT_L 0x05
+#define MAG_YOUT_H 0x06
+#define MAG_ZOUT_L 0x07
+#define MAG_ZOUT_H 0x08
 
 #define BITBAND(addr, bitnum) ((addr & 0xF0000000) + 0x2000000 + ((addr & 0xFFFFF) << 5) + (bitnum << 2))
 #define MEM_ADDR(addr) *((volatile unsigned long *)(addr))

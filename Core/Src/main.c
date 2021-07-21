@@ -19,6 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -74,7 +75,7 @@ short magX, magY, magZ;
 
 int Voltage;
 
-int testint;
+uint8_t testint;
 
 /* USER CODE END PV */
 
@@ -132,6 +133,7 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM6_Init();
   MX_USART1_UART_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
 
   delay_init();
@@ -160,6 +162,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+#if 0
     PS2_KEY = PS2_DataKey();
 
     PS2_LX = PS2_AnologData(PSS_LX);
@@ -169,6 +172,12 @@ int main(void)
 
     oled_show();
     Send_Signal();
+#endif
+    testint = I2C_Read_Reg(GYRO_ADDRESS, SMPLRT_DIV);
+    printf("%x  ", testint);
+    I2C_Write_Reg(GYRO_ADDRESS, SMPLRT_DIV, 0x09); //采样频率 125Hz
+    testint = I2C_Read_Reg(GYRO_ADDRESS, SMPLRT_DIV);
+    printf("%x  \n", testint);
     delay_flag = 1;
 
     delay_50 = 0;
