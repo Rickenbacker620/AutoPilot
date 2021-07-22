@@ -1,6 +1,7 @@
 #include "control.h"
 #include "filter.h"
 #include "encoder.h"
+#include "key.h"
 
 uint8_t Flag_Target, Flag_Change; //相关标志位
 float Voltage_Count, Voltage_All; //电压采样相关变量

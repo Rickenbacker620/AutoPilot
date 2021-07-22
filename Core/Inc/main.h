@@ -24,11 +24,10 @@
 #define __MAIN_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-  /* Includes ------------------------------------------------------------------*/
+/* Includes ------------------------------------------------------------------*/
 
 #include "stm32f1xx_ll_i2c.h"
 #include "stm32f1xx_ll_rcc.h"
@@ -56,10 +55,17 @@ extern "C"
 #include <string.h>
 #include <math.h>
 
-  /* USER CODE END Includes */
+#include "control.h"
+#include "delay.h"
+#include "oled.h"
+#include "pstwo.h"
+#include "show.h"
+#include "mpu9250.h"
 
-  /* Exported types ------------------------------------------------------------*/
-  /* USER CODE BEGIN ET */
+/* USER CODE END Includes */
+
+/* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
 
 #define JTAG_SWD_DISABLE 0X02
 #define SWD_ENABLE 0X01
@@ -101,34 +107,34 @@ extern "C"
 
   extern uint8_t testint;
 
-  /* USER CODE END ET */
+/* USER CODE END ET */
 
-  /* Exported constants --------------------------------------------------------*/
-  /* USER CODE BEGIN EC */
+/* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN EC */
 
-  /* USER CODE END EC */
+/* USER CODE END EC */
 
-  /* Exported macro ------------------------------------------------------------*/
-  /* USER CODE BEGIN EM */
+/* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
 
-  /* USER CODE END EM */
+/* USER CODE END EM */
 
-  /* Exported functions prototypes ---------------------------------------------*/
-  void Error_Handler(void);
+/* Exported functions prototypes ---------------------------------------------*/
+void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define SERVO_PERIOD 10000 - 1
-#define SERVO_PRESCALER 72 - 1
-#define MOTOR_PERIOD 7200 - 1
-#define MOTOR_PRESCALER 1 - 1
-#define ENCODER_PERIOD 65536 - 1
-#define ENCODER_PRESCALER 1 - 1
-#define TIM6_PERIOD 100 - 1
-#define TIM6_PRESCALER 7200 - 1
+#define SERVO_PERIOD 10000-1
+#define SERVO_PRESCALER 72-1
+#define MOTOR_PERIOD 7200-1
+#define MOTOR_PRESCALER 1-1
+#define ENCODER_PERIOD 65536-1
+#define ENCODER_PRESCALER 1-1
+#define TIM6_PERIOD 100-1
+#define TIM6_PRESCALER 7200-1
 #define OLED_SCL_Pin LL_GPIO_PIN_13
 #define OLED_SCL_GPIO_Port GPIOC
 #define OLED_SDA_Pin LL_GPIO_PIN_14
@@ -172,48 +178,18 @@ extern "C"
 #define LEFT_MOTOR_ENB_Pin LL_GPIO_PIN_3
 #define LEFT_MOTOR_ENB_GPIO_Port GPIOB
 #ifndef NVIC_PRIORITYGROUP_0
-#define NVIC_PRIORITYGROUP_0 ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority, \
-                                                         4 bits for subpriority */
-#define NVIC_PRIORITYGROUP_1 ((uint32_t)0x00000006) /*!< 1 bit  for pre-emption priority, \
-                                                         3 bits for subpriority */
-#define NVIC_PRIORITYGROUP_2 ((uint32_t)0x00000005) /*!< 2 bits for pre-emption priority, \
-                                                         2 bits for subpriority */
-#define NVIC_PRIORITYGROUP_3 ((uint32_t)0x00000004) /*!< 3 bits for pre-emption priority, \
-                                                         1 bit  for subpriority */
-#define NVIC_PRIORITYGROUP_4 ((uint32_t)0x00000003) /*!< 4 bits for pre-emption priority, \
-                                                         0 bit  for subpriority */
+#define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
+                                                                 4 bits for subpriority */
+#define NVIC_PRIORITYGROUP_1         ((uint32_t)0x00000006) /*!< 1 bit  for pre-emption priority,
+                                                                 3 bits for subpriority */
+#define NVIC_PRIORITYGROUP_2         ((uint32_t)0x00000005) /*!< 2 bits for pre-emption priority,
+                                                                 2 bits for subpriority */
+#define NVIC_PRIORITYGROUP_3         ((uint32_t)0x00000004) /*!< 3 bits for pre-emption priority,
+                                                                 1 bit  for subpriority */
+#define NVIC_PRIORITYGROUP_4         ((uint32_t)0x00000003) /*!< 4 bits for pre-emption priority,
+                                                                 0 bit  for subpriority */
 #endif
-  /* USER CODE BEGIN Private defines */
-
-#define ACCEL_ADDRESS 0xD0
-#define GYRO_ADDRESS 0xD0
-#define MAG_ADDRESS 0x18
-#define SMPLRT_DIV 0X19
-#define CONFIG 0X1A
-#define GYRO_CONFIG 0X1B
-#define ACCEL_CONFIG 0X1C
-#define ACCEL_CONFIG2 0X1D
-
-#define ACCEL_XOUT_H 0X3B
-#define ACCEL_XOUT_L 0X3C
-#define ACCEL_YOUT_H 0X3D
-#define ACCEL_YOUT_L 0X3E
-#define ACCEL_ZOUT_H 0X3F
-#define ACCEL_ZOUT_L 0X40
-
-#define GYRO_XOUT_H 0X43
-#define GYRO_XOUT_L 0X44
-#define GYRO_YOUT_H 0X45
-#define GYRO_YOUT_L 0X46
-#define GYRO_ZOUT_H 0X47
-#define GYRO_ZOUT_L 0X48
-
-#define MAG_XOUT_L 0x03
-#define MAG_XOUT_H 0x04
-#define MAG_YOUT_L 0x05
-#define MAG_YOUT_H 0x06
-#define MAG_ZOUT_L 0x07
-#define MAG_ZOUT_H 0x08
+/* USER CODE BEGIN Private defines */
 
 #define BITBAND(addr, bitnum) ((addr & 0xF0000000) + 0x2000000 + ((addr & 0xFFFFF) << 5) + (bitnum << 2))
 #define MEM_ADDR(addr) *((volatile unsigned long *)(addr))
@@ -241,7 +217,7 @@ extern "C"
 #define PDout(n) BIT_ADDR(GPIOD_ODR_Addr, n)
 #define PDin(n) BIT_ADDR(GPIOD_IDR_Addr, n)
 
-  /* USER CODE END Private defines */
+/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

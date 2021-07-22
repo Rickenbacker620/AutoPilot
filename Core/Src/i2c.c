@@ -73,10 +73,8 @@ void MX_I2C2_Init(void)
 
 /* USER CODE BEGIN 1 */
 
-uint8_t I2C_Write_Reg(uint8_t slave_addr, uint8_t reg_addr, uint8_t reg_data)
+void I2C_Write_Reg(uint8_t slave_addr, uint8_t reg_addr, uint8_t reg_data)
 {
-  uint8_t temp = 0;
-
   slave_addr &= ~0x01;
   //wait for bus is free
   while (LL_I2C_IsActiveFlag_BUSY(I2C2))

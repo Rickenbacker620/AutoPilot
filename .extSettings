@@ -6,4 +6,4 @@ HeaderPath=../Utils/Inc; ../Bsp/Inc
 [Groups]
 Application/User/Core=../Core/Src/control.c; ../Core/Src/show.c;
 Application/User/Utils=../Utils/Src/delay.c; ../Utils/Src/filter.c;
-Application/User/Bsp=../Bsp/Src/oled.c; ../Bsp/Src/pstwo.c; ../Bsp/Src/key.c; ../Bsp/Src/encoder.c;
+Application/User/Bsp=../Bsp/Src/oled.c; ../Bsp/Src/pstwo.c; ../Bsp/Src/key.c; ../Bsp/Src/encoder.c; ../Bsp/Src/mpu9250.c;

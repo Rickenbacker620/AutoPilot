@@ -26,11 +26,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "control.h"
-#include "delay.h"
-#include "oled.h"
-#include "pstwo.h"
-#include "show.h"
 
 /* USER CODE END Includes */
 
@@ -139,6 +134,7 @@ int main(void)
   delay_init();
 
   OLED_Init();
+  MPU9250_Init();
 
   Flag_Way = 1;
   Flag_Show = 0;
@@ -170,15 +166,17 @@ int main(void)
     PS2_RX = PS2_AnologData(PSS_RX);
     PS2_RY = PS2_AnologData(PSS_RY);
 
+#endif
     oled_show();
     Send_Signal();
-#endif
-    testint = I2C_Read_Reg(GYRO_ADDRESS, SMPLRT_DIV);
-    printf("%x  ", testint);
-    I2C_Write_Reg(GYRO_ADDRESS, SMPLRT_DIV, 0x09); //采样频率 125Hz
-    testint = I2C_Read_Reg(GYRO_ADDRESS, SMPLRT_DIV);
-    printf("%x  \n", testint);
+    // testint = I2C_Read_Reg(GYRO_ADDRESS, SMPLRT_DIV);
+    // printf("%x  ", testint);
+    // I2C_Write_Reg(GYRO_ADDRESS, SMPLRT_DIV, 0x09); //采样频率 125Hz
+    // testint = I2C_Read_Reg(GYRO_ADDRESS, SMPLRT_DIV);
+    // printf("%x  \n", testint);
     delay_flag = 1;
+    readImu();
+    // printf("%d %d %d %d %d %d %d %d %d\n", gyroX, gyroY, gyroZ, accelX, accelY, accelZ, magX, magY, magZ);
 
     delay_50 = 0;
     while (delay_flag)
@@ -198,30 +196,33 @@ int main(void)
 void SystemClock_Config(void)
 {
   LL_FLASH_SetLatency(LL_FLASH_LATENCY_2);
-  while (LL_FLASH_GetLatency() != LL_FLASH_LATENCY_2)
+  while(LL_FLASH_GetLatency()!= LL_FLASH_LATENCY_2)
   {
   }
   LL_RCC_HSE_Enable();
 
-  /* Wait till HSE is ready */
-  while (LL_RCC_HSE_IsReady() != 1)
+   /* Wait till HSE is ready */
+  while(LL_RCC_HSE_IsReady() != 1)
   {
+
   }
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
   LL_RCC_PLL_Enable();
 
-  /* Wait till PLL is ready */
-  while (LL_RCC_PLL_IsReady() != 1)
+   /* Wait till PLL is ready */
+  while(LL_RCC_PLL_IsReady() != 1)
   {
+
   }
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_2);
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
 
-  /* Wait till System clock is ready */
-  while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
+   /* Wait till System clock is ready */
+  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
   {
+
   }
   LL_Init1msTick(72000000);
   LL_SetSystemCoreClock(72000000);
@@ -246,7 +247,7 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
+#ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
