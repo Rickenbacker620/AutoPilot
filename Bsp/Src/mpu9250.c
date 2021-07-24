@@ -25,6 +25,7 @@ uint8_t MPU9250_Init(void)
 	}
 	return 1;
 }
+
 //读取加速度数据的函数
 void MPU9250_READ_ACCEL(short *accData)
 {
@@ -39,6 +40,7 @@ void MPU9250_READ_ACCEL(short *accData)
 	BUF[5] = I2C_Read_Reg(ACCEL_ADDRESS, ACCEL_ZOUT_H); //读 Z 加速度高字节
 	accelZ = (BUF[5] << 8) | BUF[4];
 }
+
 //读取角速度数据的函数
 void MPU9250_READ_GYRO(short *gyroData)
 {
@@ -53,6 +55,7 @@ void MPU9250_READ_GYRO(short *gyroData)
 	BUF[5] = I2C_Read_Reg(GYRO_ADDRESS, GYRO_ZOUT_H); //读 Z 角速度高字节
 	gyroZ = (BUF[5] << 8) | BUF[4];
 }
+
 //读取磁力计数据的函数
 void MPU9250_READ_MAG(short *magData)
 {

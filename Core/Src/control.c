@@ -1,5 +1,4 @@
 #include "control.h"
-#include "filter.h"
 #include "encoder.h"
 #include "key.h"
 

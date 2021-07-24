@@ -41,7 +41,7 @@ void MX_I2C2_Init(void)
   PB10   ------> I2C2_SCL
   PB11   ------> I2C2_SDA
   */
-  GPIO_InitStruct.Pin = MPU9250_SCL_Pin | MPU9250_SDA_Pin;
+  GPIO_InitStruct.Pin = MPU9250_SCL_Pin|MPU9250_SDA_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_OPENDRAIN;
@@ -69,6 +69,7 @@ void MX_I2C2_Init(void)
   /* USER CODE BEGIN I2C2_Init 2 */
 
   /* USER CODE END I2C2_Init 2 */
+
 }
 
 /* USER CODE BEGIN 1 */
